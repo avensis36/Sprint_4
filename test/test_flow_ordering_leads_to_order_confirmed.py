@@ -6,7 +6,7 @@ from pages.scooter_rent_page import ScooterRentPage
 import locators
 
 
-@allure.story('Test the positive scenario flow')
+@allure.story('Test the positive scenario flow of ordering')
 class TestPositiveFlowOrder:
     top_button = locators.ScooterButtons.order_button_top
     bottom_button = locators.ScooterButtons.order_button_bottom
