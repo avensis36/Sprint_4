@@ -13,10 +13,8 @@ class TestPositiveFlow:
     bottom_button = locators.ScooterButtons.order_button_bottom
 
     @allure.feature('Test ordering the scooter of the positive scenario flow')
-    @pytest.mark.parametrize('order_button, name, surname, address, phone',
-                             [[bottom_button, 'Тест', 'Тестов', 'Тестовый адрес', '11111111111'],
-                              [top_button, 'Иван', 'Иванов', 'Ул. Иванова 1', '89991112233']])
-    def test_order_flow_leads_to_order_confirmed(self, driver, order_button, name, surname, address, phone):
+    @pytest.mark.parametrize('order_button', [bottom_button, top_button])
+    def test_order_flow_leads_to_order_confirmed(self, driver, order_button, name='Тест', surname='Тестов', address='Тестовый адрес', phone='11111111111'):
         scooter_main_page = ScooterMainPage(driver)
         scooter_main_page.go_to_site(scooter_main_page.base_url)
         scooter_main_page.click_on_cookie_disappear_button()
@@ -36,11 +34,8 @@ class TestPositiveFlow:
         assert "Заказ оформлен" in actual_header
 
     @allure.feature("Test clicking on 'Scooter' of the positive scenario flow")
-    @pytest.mark.parametrize('order_button, name, surname, address, phone',
-                             [[bottom_button, 'Тест', 'Тестов', 'Тестовый адрес', '11111111111'],
-                              [top_button, 'Иван', 'Иванов', 'Ул. Иванова 1', '89991112233']])
-    def test_order_flow_click_on_scooter_logo_after_order_is_confirmed(self, driver, order_button, name, surname, address, phone):
-        self.test_order_flow_leads_to_order_confirmed(driver, order_button, name, surname, address, phone)
+    def test_order_flow_click_on_scooter_logo_after_order_is_confirmed(self, driver):
+        self.test_order_flow_leads_to_order_confirmed(driver, TestPositiveFlow.top_button)
 
         scooter_rent_page = ScooterRentPage(driver)
         scooter_rent_page.click_on_check_status_button()
@@ -52,11 +47,8 @@ class TestPositiveFlow:
         assert main_page_url == driver.current_url
 
     @allure.feature("Test clicking on 'Yandex' logo of the positive scenario flow")
-    @pytest.mark.parametrize('order_button, name, surname, address, phone',
-                             [[bottom_button, 'Тест', 'Тестов', 'Тестовый адрес', '11111111111'],
-                              [top_button, 'Иван', 'Иванов', 'Ул. Иванова 1', '89991112233']])
-    def test_order_flow_click_on_yandex_logo_leads_to_yandex_main_page(self, driver, order_button, name, surname, address, phone):
-        self.test_order_flow_click_on_scooter_logo_after_order_is_confirmed(driver, order_button, name, surname, address, phone)
+    def test_order_flow_click_on_yandex_logo_leads_to_yandex_main_page(self, driver):
+        self.test_order_flow_click_on_scooter_logo_after_order_is_confirmed(driver)
 
         scooter_main_page = ScooterMainPage(driver)
         scooter_main_page.click_on_yandex_logo()
@@ -68,10 +60,7 @@ class TestPositiveFlow:
         assert yandex_main_page_url == driver.current_url, f"Current url doesn't lead to {yandex_main_page_url}"
 
     @allure.feature('The whole flow')
-    @pytest.mark.parametrize('order_button, name, surname, address, phone',
-                             [[bottom_button, 'Тест', 'Тестов', 'Тестовый адрес', '11111111111'],
-                              [top_button, 'Иван', 'Иванов', 'Ул. Иванова 1', '89991112233']])
-    def test_the_whole_order_flow(self, driver, order_button, name, surname, address, phone):
-        self.test_order_flow_click_on_yandex_logo_leads_to_yandex_main_page(driver, order_button, name, surname, address, phone)
+    def test_the_whole_order_flow(self, driver):
+        self.test_order_flow_click_on_yandex_logo_leads_to_yandex_main_page(driver)
 
 
