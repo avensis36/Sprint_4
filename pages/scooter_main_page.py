@@ -20,7 +20,7 @@ class ScooterMainPage(BasePage):
 
     @allure.step('Scroll to a question')
     def scroll_to_question(self, question):
-        return self.scroll_to_element(question)
+        self.scroll_to_element(question)
 
     @allure.step('Find answer')
     def find_answer(self, answer):
